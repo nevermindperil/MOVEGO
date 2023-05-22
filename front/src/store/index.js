@@ -76,8 +76,10 @@ const store = new Vuex.Store({
           console.log("Username:", res.data.username);
           context.commit("SAVE_TOKEN", {
             token: res.data.key,
-            username: res.data.username,
+            username: payload.username,
           });
+
+          router.push({ name: "HomeView" }); // 회원가입 완료 후 홈으로 이동
         })
         .catch((err) => {
           console.log(err);
@@ -106,6 +108,7 @@ const store = new Vuex.Store({
             token: res.data.key,
             username: payload.username,
           });
+
         })
         .catch((err) => {
           console.log("Login error:", err); // 로그인 에러 확인

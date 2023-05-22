@@ -121,7 +121,8 @@ export default {
   font-size: 60px;
   height: 250px;
   font-weight: bold;
-  color: #e50914;
+  /* color: #e50914; */
+  color: white;
 }
 
 .textContainer {

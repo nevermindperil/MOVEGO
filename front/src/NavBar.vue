@@ -63,7 +63,7 @@ export default {
 .navbar {
   /* background-color: rgba(93, 92, 92, 0.469); */
   /* background-color: inherit; */
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.071);
 }
 .nav-link,
 .navbar-brand {
