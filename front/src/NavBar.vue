@@ -24,12 +24,14 @@
             >
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link :to="'/profile/' + $store.state.username"
+            <router-link
+              :to="'/profile/' + $store.state.username"
+              class="nav-link"
               >Profile</router-link
             >
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <span class="nav-link" @click="logout">LOGOUT</span>
+            <button class="nav-link logoutBtn" @click="logout">Logout</button>
           </li>
         </ul>
       </div>
@@ -59,10 +61,29 @@ export default {
 
 <style scoped>
 .navbar {
-  background-color: rgba(93, 92, 92, 0.469);
+  /* background-color: rgba(93, 92, 92, 0.469); */
+  /* background-color: inherit; */
+  background-color: black;
 }
 .nav-link,
 .navbar-brand {
   color: white;
+  font-size: 43px;
+}
+
+.nav-link {
+  margin-left: 20px;
+}
+
+.logoutBtn {
+  background-color: inherit;
+  border: 0px;
+}
+.nav-item:hover .nav-link {
+  color: #b00710;
+  font-weight: bold;
+}
+.navbar-brand:hover {
+  color: #b00710;
 }
 </style>

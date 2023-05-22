@@ -12,7 +12,11 @@
         </div>
       </div>
       <!-- EgoExpand 라우터 링크 -->
-      <router-link :to="{ name: 'egoExpand' }" class="nav-link">
+      <router-link
+        :to="{ name: 'egoExpand' }"
+        class="nav-link"
+        style="width: fit-content"
+      >
         <span class="egoExpandBtn" :class="{ blink: isBlinking }"
           >Click to Ego Expand</span
         ></router-link
@@ -117,7 +121,7 @@ export default {
   font-size: 60px;
   height: 250px;
   font-weight: bold;
-  color: white;
+  color: #e50914;
 }
 
 .textContainer {
@@ -128,9 +132,10 @@ export default {
 .egoExpandBtn {
   display: inline-block; /* 글자에 딱 맞게 영역 설정 */
   padding: 5px 10px; /* 필요에 따라 padding 조정 */
-  font-size: 30px;
+  font-size: 35px;
   color: white;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.9s ease-in-out;
+  font-weight: bold;
 }
 .blink {
   opacity: 0;
