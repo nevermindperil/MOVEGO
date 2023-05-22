@@ -24,12 +24,15 @@
             >
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link :to="{ name: 'Profile' }" class="nav-link"
-              >{{ getUsername() }} 님</router-link
+            <router-link
+              v-if="isLoggedIn"
+              :to="`/profile/${username}`"
+              class="nav-link"
+              >Profile</router-link
             >
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <button class="nav-link" @click="logout">LOGOUT</button>
+            <span class="nav-link" @click="logout">LOGOUT</span>
           </li>
         </ul>
       </div>
@@ -42,23 +45,16 @@ export default {
   name: "NavBar",
   methods: {
     logout() {
-      // 로그아웃 처리 로직
       this.$store.commit("LOGOUT");
-      // 로그아웃 후 로그인 페이지로 이동
-      this.$router.push({ name: "HomeView" });
-    },
-    getUsername() {
-      const username = this.$store.state.username;
-      if (username) {
-        return `${username} 님`; // 유저 이름과 " 님"을 함께 반환합니다.
-      } else {
-        return "";
-      }
+      this.$router.push({ name: "LogInView" });
     },
   },
   computed: {
     isLoggedIn() {
       return this.$store.getters.isLogin;
+    },
+    username() {
+      return this.$store.state.username;
     },
   },
 };

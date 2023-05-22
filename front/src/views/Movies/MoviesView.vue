@@ -1,30 +1,29 @@
 <template>
   <div>
-    <button @click="getMovies">Get Movies</button>
-    <ul>
-      <li v-for="movie in movies" :key="movie.id">{{ movie.title }}</li>
-    </ul>
+    <h1>Movie List</h1>
+    <hr />
+    <MovieList />
   </div>
 </template>
 
 <script>
+import MovieList from "@/components/MovieList.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
-  data() {
-    return {
-      movies: [],
-    };
+  name: "MovieListView",
+  components: {
+    MovieList,
+  },
+  computed: {
+    ...mapGetters(["movies"]),
   },
   methods: {
-    getMovies() {
-      this.$http
-        .get("http://127.0.0.1:8000/tmdb/movies/")
-        .then((response) => {
-          this.movies = response.data;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
+    ...mapActions(["fetchMovies"]),
+  },
+  created() {
+    this.fetchMovies();
   },
 };
 </script>
+
+<style></style>

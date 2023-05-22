@@ -3,24 +3,22 @@ from django.http import JsonResponse, HttpResponse
 from .models import Genre, Movie, Actor
 import requests
 
-from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Movie
 from .serializers import MovieSerializer
 
-class MovieListAPIView(APIView):
-    def get(self, request):
-        movies = Movie.objects.all()
-        serializer = MovieSerializer(movies, many=True)
-        return Response(serializer.data)
+@api_view(['GET'])
+def movie_list(request):
+    movies = Movie.objects.all()
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
 
-class MovieDetailAPIView(APIView):
-    def get(self, request, movie_pk):
-        movie = Movie.objects.get(pk=movie_pk)
-        serializer = MovieSerializer(movie)
-        return Response(serializer.data)
-
-
+@api_view(['GET'])
+def movie_detail(request, movie_pk):
+    movie = Movie.objects.get(pk=movie_pk)
+    serializer = MovieSerializer(movie)
+    return Response(serializer.data)
 
 
 # TMDB API KEY 작성
