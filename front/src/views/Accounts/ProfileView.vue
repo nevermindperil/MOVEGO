@@ -7,12 +7,15 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
   name: "ProfileView",
   computed: {
-    username() {
-      return this.$store.state.username;
-    },
+    ...mapState(["username"]),
+  },
+  methods: {
+    ...mapActions(["deleteAccount"]),
   },
 };
 </script>

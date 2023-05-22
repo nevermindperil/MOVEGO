@@ -4,10 +4,6 @@ import axios from "axios";
 import createPersistedState from "vuex-persistedstate";
 import router from "../router";
 
-
-
-
-
 const API_URL = "http://127.0.0.1:8000";
 
 Vue.use(Vuex);
@@ -85,10 +81,6 @@ const store = new Vuex.Store({
           console.log(err);
         });
     },
-
-    // login 액션
-    // Vue의 login 액션
-    // Vue의 login 액션
     login(context, payload) {
       const username = payload.username;
       const password = payload.password;
@@ -114,20 +106,58 @@ const store = new Vuex.Store({
           console.log("Login error:", err); // 로그인 에러 확인
         });
     },
-
     logout(context) {
       context.commit("LOGOUT");
       router.push({ name: "HomeView" });
     },
-    // profile(context) {
-    //   const username = context.state.username;
-    //   if (username) {
-    //     const profileUrl = `/profile/${username}`;
-    //     console.log("Profile URL:", profileUrl); // 프로필 URL 확인
-    //     router.push({ path: profileUrl });
-    //   } else {
-    //     console.log("Username is undefined");
-    //   }
+    // Vue 컴포넌트에서 계정 삭제 요청을 보내는 메서드
+    deleteAccount(context) {
+      const username = context.state.username; // Vuex의 상태에서 username 값을 가져옵니다.
+
+      // 삭제 요청을 보낼 API 엔드포인트 URL
+      const url = `http://127.0.0.1:8000/accounts/delete/${username}/`;
+
+      // 삭제 요청 보내기
+      axios
+        .delete(url, {
+          headers: {
+            Authorization: `Token ${context.state.token}`,
+          },
+        })
+        .then(() => {
+          // 삭제 성공 시 처리할 로직
+          console.log("계정이 성공적으로 삭제되었습니다.");
+          // 회원 탈퇴 후 필요한 작업 수행
+          context.dispatch("logout");
+          router.push({ name: "HomeView" });
+        })
+        .catch((error) => {
+          // 삭제 실패 시 처리할 로직
+          console.error("계정 삭제 실패:", error);
+        });
+    }
+
+
+
+
+
+
+    // deleteAccount(context) {
+
+    //   // 일단 회원탈퇴 버튼 누르면 여기까지 옴.
+    //   // console.log('여기오니?')
+
+    //   // 계정 삭제 요청
+    //   axios
+    //     .delete(`${API_URL}/accounts/delete/`)
+    //     .then(() => {
+    //       // 계정 삭제 성공 시 로그아웃 처리하고 Home으로
+    //       context.commit("LOGOUT");
+    //       router.push({ name: "HomeView" });
+    //     })
+    //     .catch((error) => {
+    //       console.error("계정 삭제 실패:", error);
+    //     });
     // },
   },
 });
