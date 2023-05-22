@@ -8,14 +8,10 @@
 <script>
 export default {
   name: "ProfileView",
-  created() {
-    // URL 파라미터에서 사용자 이름 가져오기
-    this.username = this.$route.params.username;
-  },
-  data() {
-    return {
-      username: "",
-    };
+  computed: {
+    username() {
+      return this.$store.state.username;
+    },
   },
 };
 </script>

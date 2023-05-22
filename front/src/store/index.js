@@ -33,8 +33,10 @@ const store = new Vuex.Store({
     },
     SAVE_TOKEN(state, { token, username }) {
       state.token = token;
+      console.log("A", state.username);
       state.username = username;
-      router.push({ name: "HomeView" });
+      console.log("B", state.username);
+      console.log("Stored username:", state.username); // username 저장 확인
     },
   },
   actions: {
@@ -61,15 +63,29 @@ const store = new Vuex.Store({
           password2,
         })
         .then((res) => {
-          context.commit("SAVE_TOKEN", { token: res.data.key, username });
+          const token = res.data.key;
+          const username = res.data.username;
+          console.log("----", token, username);
+          console.log("Received response:", res.data);
+          console.log("Username:", res.data.username);
+          context.commit("SAVE_TOKEN", {
+            token: res.data.key,
+            username: res.data.username,
+          });
         })
         .catch((err) => {
           console.log(err);
         });
     },
+
+    // login 액션
+    // Vue의 login 액션
+    // Vue의 login 액션
     login(context, payload) {
       const username = payload.username;
       const password = payload.password;
+
+      console.log("Login request:", username, password); // 로그인 요청 데이터 확인
 
       axios
         .post(`${API_URL}/accounts/login/`, {
@@ -77,17 +93,33 @@ const store = new Vuex.Store({
           password,
         })
         .then((res) => {
-          const username = res.data.username;
-          context.commit("SAVE_TOKEN", { token: res.data.key, username });
+          console.log("Received response:", res.data);
+          console.log("Data structure:", res.data);
+
+          context.commit("SAVE_TOKEN", {
+            token: res.data.key,
+            username: payload.username,
+          });
         })
         .catch((err) => {
-          console.log(err);
+          console.log("Login error:", err); // 로그인 에러 확인
         });
     },
+
     logout(context) {
       context.commit("LOGOUT");
       router.push({ name: "HomeView" });
     },
+    // profile(context) {
+    //   const username = context.state.username;
+    //   if (username) {
+    //     const profileUrl = `/profile/${username}`;
+    //     console.log("Profile URL:", profileUrl); // 프로필 URL 확인
+    //     router.push({ path: profileUrl });
+    //   } else {
+    //     console.log("Username is undefined");
+    //   }
+    // },
   },
 });
 

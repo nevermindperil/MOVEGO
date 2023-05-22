@@ -24,10 +24,7 @@
             >
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link
-              v-if="isLoggedIn"
-              :to="`/profile/${username}`"
-              class="nav-link"
+            <router-link :to="'/profile/' + $store.state.username"
               >Profile</router-link
             >
           </li>
