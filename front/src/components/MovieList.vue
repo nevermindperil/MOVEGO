@@ -1,10 +1,13 @@
 <template>
   <div>
     <div class="genre1 genres">
-      <h2 style="margin-left: 190px; font-weight: bold">
-        모험과 사랑을 찾는 당신에게 !
-      </h2>
-      <swiper ref="filterSwiper1" :options="swiperOption" role="tablist">
+      <h2 class="listText">모험과 사랑을 찾을까요 ? 말까요 ?</h2>
+      <swiper
+        ref="filterSwiper1"
+        :options="options"
+        role="tablist"
+        class="swiperWrap"
+      >
         <swiper-slide
           role="tab"
           v-for="(group, index) in movieGroups.genre1Movies"
@@ -23,10 +26,13 @@
     </div>
 
     <div class="genre2 genres">
-      <h2 style="margin-left: 190px; font-weight: bold">
-        덕후가 세상을 지배한다. MOV;GO가 추천하는 애니메이션
-      </h2>
-      <swiper ref="filterSwiper2" :options="swiperOption" role="tablist">
+      <h2 class="listText">나의 히어로 시네마데이</h2>
+      <swiper
+        ref="filterSwiper2"
+        :options="options"
+        role="tablist"
+        class="swiperWrap"
+      >
         <swiper-slide
           role="tab"
           v-for="(group, index) in movieGroups.genre2Movies"
@@ -45,10 +51,13 @@
     </div>
 
     <div class="genre3 genres">
-      <h2 style="margin-left: 190px; font-weight: bold">
-        일주일동안 받은 스트레스 다 뽀개버려
-      </h2>
-      <swiper ref="filterSwiper3" :options="swiperOption" role="tablist">
+      <h2 class="listText">스트레스 初戰박살</h2>
+      <swiper
+        ref="filterSwiper3"
+        :options="options"
+        role="tablist"
+        class="swiperWrap"
+      >
         <swiper-slide
           role="tab"
           v-for="(group, index) in movieGroups.genre3Movies"
@@ -80,6 +89,14 @@ export default {
     MovieListItem,
     swiper,
     swiperSlide,
+  },
+  data() {
+    return {
+      options: {
+        // swiper 옵션 설정
+        // 필요한 옵션 값을 여기에 추가
+      },
+    };
   },
   computed: {
     ...mapGetters(["movies"]),
@@ -125,6 +142,12 @@ export default {
 }
 
 .genres {
-  margin-bottom: 50px;
+  margin-bottom: 100px;
+}
+.listText {
+  margin-left: 190px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 30px;
 }
 </style>

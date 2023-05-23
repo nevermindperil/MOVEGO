@@ -7,9 +7,6 @@
         <h5 class="card-title" style="color: white">{{ movie.title }}</h5>
       </div>
     </div>
-    <div class="card-body">
-      <!-- <p class="card-tex text-truncate">{{ movie.overview }}</p> -->
-    </div>
   </div>
   <!-- </div> -->
 </template>
@@ -35,7 +32,7 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   width: 200px;
-  height: 400px;
+  height: 380px;
 }
 
 .card-img-top {
