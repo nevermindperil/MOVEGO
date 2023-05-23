@@ -28,6 +28,7 @@ const routes = [
     name: "movies",
     component: MoviesView,
   },
+
   // Ego 메인 홈
   {
     path: "/EgoView",

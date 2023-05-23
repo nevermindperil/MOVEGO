@@ -9,8 +9,7 @@ const API_URL = "http://127.0.0.1:8000";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  modules: {
-  },
+  modules: {},
   plugins: [createPersistedState()],
   state: {
     movies: [],
@@ -100,7 +99,6 @@ const store = new Vuex.Store({
             token: res.data.key,
             username: payload.username,
           });
-
         })
         .catch((err) => {
           console.log("Login error:", err); // 로그인 에러 확인
@@ -115,7 +113,7 @@ const store = new Vuex.Store({
       const username = context.state.username; // Vuex의 상태에서 username 값을 가져옵니다.
 
       // 삭제 요청을 보낼 API 엔드포인트 URL
-      const url = `http://127.0.0.1:8000/accounts/delete/${username}/`;
+      const url = `http://127.0.0.1:8000/accounts/${username}/`;
 
       // 삭제 요청 보내기
       axios
@@ -135,30 +133,7 @@ const store = new Vuex.Store({
           // 삭제 실패 시 처리할 로직
           console.error("계정 삭제 실패:", error);
         });
-    }
-
-
-
-
-
-
-    // deleteAccount(context) {
-
-    //   // 일단 회원탈퇴 버튼 누르면 여기까지 옴.
-    //   // console.log('여기오니?')
-
-    //   // 계정 삭제 요청
-    //   axios
-    //     .delete(`${API_URL}/accounts/delete/`)
-    //     .then(() => {
-    //       // 계정 삭제 성공 시 로그아웃 처리하고 Home으로
-    //       context.commit("LOGOUT");
-    //       router.push({ name: "HomeView" });
-    //     })
-    //     .catch((error) => {
-    //       console.error("계정 삭제 실패:", error);
-    //     });
-    // },
+    },
   },
 });
 

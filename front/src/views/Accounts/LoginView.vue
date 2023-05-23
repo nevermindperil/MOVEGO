@@ -83,6 +83,4 @@ export default {
 .btn-primary {
   border-radius: 0;
 }
-.container {
-}
 </style>

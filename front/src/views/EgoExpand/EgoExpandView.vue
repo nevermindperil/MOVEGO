@@ -1,5 +1,5 @@
 <template>
-  <div class="egoExpand">
+  <div class="egoExpandExplain">
     <h1>egoExpand페이지</h1>
   </div>
 </template>
@@ -13,5 +13,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
