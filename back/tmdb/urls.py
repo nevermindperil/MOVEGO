@@ -1,0 +1,9 @@
+from django.urls import path
+from tmdb.views import movie_list, movie_detail
+
+app_name = 'tmdb'
+
+urlpatterns = [
+    path('movies/', movie_list, name='movie-list'),
+    path('movies/<int:movie_pk>/', movie_detail, name='movie-detail'),
+]
