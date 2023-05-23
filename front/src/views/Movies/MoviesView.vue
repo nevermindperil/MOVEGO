@@ -10,6 +10,7 @@
 <script>
 import MovieList from "@/components/MovieList.vue";
 import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "MovieListView",
   components: {

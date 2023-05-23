@@ -8,6 +8,7 @@ import LogInView from "@/views/Accounts/LoginView";
 import ProfileView from "@/views/Accounts/ProfileView";
 // Movies
 import MoviesView from "@/views/Movies/MoviesView";
+import MovieDetailView from "@/views/Movies/MovieDetailView.vue";
 // Ego (영화 좋아하는 유형 확인 페이지)
 import EgoView from "@/views/Ego/EgoView";
 // EgoExpand (영화 관련 질문 페이지)
@@ -28,6 +29,13 @@ const routes = [
     name: "movies",
     component: MoviesView,
   },
+  // Movies detail 페이지
+  {
+    path: "/movies/:id",
+    name: "MovieDetail",
+    component: MovieDetailView,
+  },
+
 
   // Ego 메인 홈
   {
