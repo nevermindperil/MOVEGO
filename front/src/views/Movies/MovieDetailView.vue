@@ -1,7 +1,8 @@
 <template>
-  <div>
-    <h1>여긴 무비디테일뷰</h1>
+  <div class="MovieDetailPage">
+    <!-- MovieInfo 컴포넌트 -->
     <MovieInfo />
+    <!-- MovieReview 컴포넌트 -->
     <MovieReview />
   </div>
 </template>
@@ -16,12 +17,25 @@ export default {
     MovieInfo,
     MovieReview,
   },
-  data() {},
+  data() {
+    return {
+      movieId: null,
+    };
+  },
+  created() {
+    // 현재 경로의 파라미터에서 영화 ID를 가져와 movieId에 저장
+    this.movieId = this.$route.params.id;
+  },
 };
 </script>
 
 <style scoped>
 h1 {
   color: white;
+}
+
+.MovieDetailPage {
+  padding: 80px;
+  display: flex;
 }
 </style>

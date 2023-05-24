@@ -17,46 +17,76 @@ const store = new Vuex.Store({
     username: null,
   },
   getters: {
-    isLogin(state) {
+    // 로그인 상태를 반환하는 getter입니다.
+    isLogin: (state) => {
       return state.token ? true : false;
     },
-    movies(state) {
+
+    // 모든 영화 목록을 반환하는 getter입니다.
+    movies: (state) => {
       return state.movies;
     },
+
+    // 주어진 ID에 해당하는 영화를 반환하는 getter입니다.
+    getMovieById: (state) => (id) => {
+      return state.movies.find((movie) => movie.id === id);
+    },
   },
+
   mutations: {
+    // 영화 목록을 설정하는 mutation입니다.
     SET_MOVIES(state, movies) {
       state.movies = movies;
     },
+
+    // 토큰과 사용자명을 저장하는 mutation입니다.
+    SAVE_TOKEN(state, { token, username }) {
+      state.token = token;
+      state.username = username;
+    },
+
+    // 로그아웃하는 mutation입니다.
     LOGOUT(state) {
       state.token = null;
       state.username = null;
     },
-    SAVE_TOKEN(state, { token, username }) {
-      state.token = token;
-      console.log("A", state.username);
-      state.username = username;
-      console.log("B", state.username);
-      console.log("Stored username:", state.username); // username 저장 확인
-    },
   },
+
   actions: {
     fetchMovies({ commit }) {
-      axios
-        .get("http://127.0.0.1:8000/tmdb/movies/")
+      return axios
+        .get(`${API_URL}/tmdb/movies/`)
         .then((response) => {
           const movies = response.data;
           commit("SET_MOVIES", movies);
         })
         .catch((error) => {
           console.error("Failed to fetch movies:", error);
+          throw error; // 오류를 다시 던져서 상위 호출자에게 전달
         });
     },
+
+    fetchMovieById({ commit }, movieId) {
+      return axios
+        .get(`${API_URL}/movies/${movieId}`)
+        .then((response) => {
+          const movie = response.data; // API 응답에서 영화 데이터 추출
+          commit("SET_MOVIES", [movie]); // 스토어의 SET_MOVIES 뮤테이션을 호출하여 영화 데이터를 업데이트
+          return movie; // 가져온 영화 객체 반환
+        })
+        .catch((error) => {
+          console.error("Failed to fetch movie:", error); // 영화 데이터 가져오기 실패 시 에러 메시지 출력
+          throw error; // 에러를 다시 던져서 상위 호출자에게 전달
+        });
+    },
+
     signUp(context, payload) {
+      // payload에서 사용자명과 비밀번호 정보를 추출합니다.
       const username = payload.username;
       const password1 = payload.password1;
       const password2 = payload.password2;
 
+      // 서버에 회원가입 요청을 보내고 응답을 처리합니다.
       axios
         .post(`${API_URL}/accounts/signup/`, {
           username,
@@ -64,22 +94,21 @@ const store = new Vuex.Store({
           password2,
         })
         .then((res) => {
+          // 회원가입 성공 시 응답에서 토큰과 사용자명을 추출합니다.
           const token = res.data.key;
           const username = res.data.username;
-          console.log("----", token, username);
-          console.log("Received response:", res.data);
-          console.log("Username:", res.data.username);
-          context.commit("SAVE_TOKEN", {
-            token: res.data.key,
-            username: payload.username,
-          });
 
-          router.push({ name: "HomeView" }); // 회원가입 완료 후 홈으로 이동
+          // 저장된 토큰과 사용자명을 상태 관리(store)의 mutations을 호출하여 저장합니다.
+          context.commit("SAVE_TOKEN", { token, username });
+
+          // HomeView로 이동합니다.
+          router.push({ name: "HomeView" });
         })
         .catch((err) => {
           console.log(err);
         });
     },
+
     login(context, payload) {
       const username = payload.username;
       const password = payload.password;
@@ -104,11 +133,12 @@ const store = new Vuex.Store({
           console.log("Login error:", err); // 로그인 에러 확인
         });
     },
+
     logout(context) {
       context.commit("LOGOUT");
       router.push({ name: "HomeView" });
     },
-    // Vue 컴포넌트에서 계정 삭제 요청을 보내는 메서드
+
     deleteAccount(context) {
       const username = context.state.username; // Vuex의 상태에서 username 값을 가져옵니다.
 

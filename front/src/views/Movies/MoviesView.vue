@@ -2,7 +2,7 @@
   <div class="MoviesView">
     <hr />
     <hr />
-    hr
+
     <MovieList />
   </div>
 </template>
