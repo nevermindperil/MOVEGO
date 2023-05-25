@@ -19,13 +19,6 @@
             >
           </li>
           <li class="nav-item" v-if="isLoggedIn">
-            <router-link
-              :to="'/profile/' + $store.state.username"
-              class="nav-link"
-              >Profile</router-link
-            >
-          </li>
-          <li class="nav-item" v-if="isLoggedIn">
             <button class="nav-link logoutBtn" @click="logout">Logout</button>
           </li>
         </ul>

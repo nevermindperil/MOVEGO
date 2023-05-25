@@ -13,7 +13,7 @@
       </div>
       <!-- EgoExpand 라우터 링크 -->
       <router-link
-        :to="{ name: 'egoExpand' }"
+        :to="{ name: 'EgoExpandIntro' }"
         class="nav-link"
         style="width: fit-content"
       >

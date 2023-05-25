@@ -5,13 +5,12 @@ import HomeView from "@/views/HomeView";
 // Accounts
 import SignUpView from "@/views/Accounts/SignUpView";
 import LogInView from "@/views/Accounts/LoginView";
-import ProfileView from "@/views/Accounts/ProfileView";
 // Movies
 import MoviesView from "@/views/Movies/MoviesView";
 import MovieDetailView from "@/views/Movies/MovieDetailView.vue";
 
 // EgoExpand (영화 관련 질문 페이지)
-import EgoExpandView from "@/views/EgoExpand/EgoExpandView";
+import EgoExpandIntro from "@/views/EgoExpand/EgoExpandIntro";
 
 Vue.use(VueRouter);
 
@@ -36,9 +35,9 @@ const routes = [
   },
 
   {
-    path: "/egoExpand",
-    name: "egoExpand",
-    component: EgoExpandView,
+    path: "/EgoExpandIntro",
+    name: "EgoExpandIntro",
+    component: EgoExpandIntro,
   },
   // Login
   {
@@ -50,11 +49,6 @@ const routes = [
     path: "/signup",
     name: "SignUpView",
     component: SignUpView,
-  },
-  {
-    path: "/profile/:username/",
-    name: "ProfileView",
-    component: ProfileView,
   },
 ];
 
