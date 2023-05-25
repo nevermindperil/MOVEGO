@@ -1,13 +1,13 @@
 from django.db import models
-from django.conf import settings
+from django.contrib.auth import get_user_model
 
 class Genre(models.Model):
     name = models.CharField(max_length=50)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    
 
 class Actor(models.Model):
     name = models.CharField(max_length=50)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    
 
 class Movie(models.Model):
     title = models.CharField(max_length=100)
@@ -19,5 +19,9 @@ class Movie(models.Model):
     poster_path = models.CharField(max_length=200)
     youtube_key = models.CharField(max_length=100)
     genres = models.ManyToManyField(Genre)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL)
     actors = models.ManyToManyField(Actor)
+
+class Comment(models.Model):
+    movie = models.ForeignKey(Movie, related_name='comments', on_delete=models.CASCADE)
+    content = models.TextField()
+    user = models.ForeignKey(get_user_model(), related_name='comments', on_delete=models.CASCADE, null=True)

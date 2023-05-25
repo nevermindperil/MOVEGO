@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="col"> -->
   <!-- 1. MovieListItem.vue 파일에서 클릭 이벤트를 추가합니다. div 요소에 @click 속성을 추가하고, 클릭 이벤트 핸들러 메서드를 호출합니다. 예를 들어, goToMovieDetail 메서드를 호출하도록 합니다. -->
-  <div class="card" @click="goToMovieDetail">
+  <div class="card" @click="goToMovieDetail(movie)">
     <div class="card-img-top">
       <img :src="posterUrl" alt="영화 포스터" />
       <div class="overlay">
@@ -25,8 +25,15 @@ export default {
   },
   // 2. MovieListItem.vue 파일의 <script> 태그에 goToMovieDetail 메서드를 추가합니다. 이 메서드는 영화 상세 페이지로 이동하는 역할을 합니다. this.$router.push()를 사용하여 영화 상세 페이지로 이동합니다. this.movie.id를 이용하여 해당 영화의 ID를 동적으로 전달합니다.
   methods: {
-    goToMovieDetail() {
-      this.$router.push({ name: "MovieDetail", params: { id: this.movie.id } });
+    goToMovieDetail(movie) {
+      console.log(this.movie);
+      this.$router.push({
+        name: "MovieDetail",
+        params: {
+          id: movie.id,
+          movie: movie,
+        },
+      });
     },
   },
 };

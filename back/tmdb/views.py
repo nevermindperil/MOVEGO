@@ -1,25 +1,84 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_list_or_404,get_object_or_404
 from django.http import JsonResponse, HttpResponse
-from .models import Genre, Movie, Actor
+from .models import Genre, Movie, Actor, Comment
 import requests
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 from .models import Movie
-from .serializers import MovieSerializer
+from .serializers import MovieSerializer, CommentSerializer
 
 @api_view(['GET'])
 def movie_list(request):
-    movies = Movie.objects.all()
+    movies = get_list_or_404(Movie)
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def movie_detail(request, movie_pk):
-    movie = Movie.objects.get(pk=movie_pk)
+    movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
 
+# @api_view(['POST'])
+# def create_comment(request, movie_pk):
+#     try:
+#         movie = Movie.objects.get(pk=movie_pk)
+#     except Movie.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+
+#     serializer = CommentSerializer(data=request.data)
+#     if serializer.is_valid():
+#         serializer.save(movie=movie)
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# @api_view(['POST','GET'])
+# def comment_list(request, movie_pk):
+#     try:
+#         movie = Movie.objects.get(pk=movie_pk)
+#         comments = Comment.objects.filter(movie=movie)
+#         serializer = CommentSerializer(comments, many=True)
+#         return Response(serializer.data)
+#     except Movie.DoesNotExist:
+#         return Response({'error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def review_list(request, movie_id):
+    if request.method == 'GET':
+        reviews = get_list_or_404(Comment, movie_id=movie_id)
+        serializer = CommentSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+
+@api_view(['GET', 'DELETE', 'PUT'])
+def review_detail(request, review_id):
+    review = get_object_or_404(Comment, id=review_id)
+
+    if request.method == 'GET':
+        serializer = CommentSerializer(review)
+        return Response(serializer.data)
+
+    elif request.method == 'DELETE':
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    elif request.method == 'PUT':
+        serializer = CommentSerializer(review, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def review_create(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    serializer = CommentSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(movie=movie, user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # TMDB API KEY 작성
 API_KEY = '892180b4715542f3cd03f4c0b9931f27'

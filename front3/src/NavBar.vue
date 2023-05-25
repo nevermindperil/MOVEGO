@@ -13,11 +13,6 @@
               >MOVIES</router-link
             >
           </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'EgoView' }" class="nav-link"
-              >EGO</router-link
-            >
-          </li>
           <li class="nav-item" v-if="!isLoggedIn">
             <router-link :to="{ name: 'LogInView' }" class="nav-link"
               >LOGIN</router-link

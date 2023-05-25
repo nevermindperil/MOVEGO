@@ -134,9 +134,10 @@ export default {
   display: inline-block; /* 글자에 딱 맞게 영역 설정 */
   padding: 5px 10px; /* 필요에 따라 padding 조정 */
   font-size: 35px;
-  color: white;
+  color: rgba(255, 255, 255, 0.671);
   transition: opacity 0.9s ease-in-out;
   font-weight: bold;
+  border: 0.1px solid rgba(255, 255, 255, 0.671);
 }
 .blink {
   opacity: 0;

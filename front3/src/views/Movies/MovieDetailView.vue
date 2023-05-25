@@ -1,7 +1,7 @@
 <template>
   <div class="MovieDetailPage">
     <MovieInfo />
-    <MovieComments />
+    <MovieComments :movie="movie" :movieId="movieId" />
   </div>
 </template>
 
@@ -18,9 +18,11 @@ export default {
   data() {
     return {
       movieId: null,
+      movie: null,
     };
   },
   created() {
+    this.movie = this.$route.params.movie;
     // 현재 경로의 파라미터에서 영화 ID를 가져와 movieId에 저장
     this.movieId = this.$route.params.id;
   },

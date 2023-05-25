@@ -2,20 +2,40 @@
   <div class="profile-view">
     <h1>프로필</h1>
     <p>사용자 이름: {{ username }}</p>
-    <button class="btn btn-danger" @click="deleteAccount">회원탈퇴</button>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapGetters } from "vuex";
+import axios from "axios";
+const API_URL = "http://127.0.0.1:8000";
 
 export default {
   name: "ProfileView",
+
   computed: {
-    ...mapState(["username"]),
+    ...mapGetters(["username"]),
+  },
+
+  mounted() {
+    this.fetchUserInfo(); // 로그인한 사용자 정보를 가져오는 액션 호출
   },
   methods: {
-    ...mapActions(["deleteAccount"]),
+    fetchUserInfo() {
+      // 사용자 정보를 가져오는 API 호출 등의 비동기 로직 수행
+      // 예시로 axios를 사용하여 API 호출하는 코드를 작성했습니다.
+      axios
+        .get(`${API_URL}/user/info`)
+        .then((response) => {
+          const userInfo = response.data;
+          // 가져온 사용자 정보를 처리하고 필요한 데이터를 store에 저장하는 로직
+          // 예시로 store의 SAVE_USER_INFO 뮤테이션을 호출하여 store에 사용자 정보를 저장하도록 했습니다.
+          this.$store.commit("SAVE_USER_INFO", userInfo);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch user info:", error);
+        });
+    },
   },
 };
 </script>
